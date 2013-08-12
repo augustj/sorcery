@@ -53,7 +53,6 @@ module Sorcery
 
                 def get_user_hash(access_token)
                   user_hash = {}
-                  access_token.token_param = "access_token"
                   response = access_token.get(@user_info_url)
                   user_hash[:user_info] = JSON.parse(response.body)
                   user_hash[:uid] = user_hash[:user_info]['id']
@@ -75,8 +74,8 @@ module Sorcery
                   args = {}
                   args.merge!({:code => params[:code]}) if params[:code]
                   options = {
-                    :access_token_path => @token_path,
-                    :access_token_method => :post
+                    :token_url => @token_path,
+                    :token_method => :post,
                   }
                   return self.get_access_token(args, options)
                 end
